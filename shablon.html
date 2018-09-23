@@ -154,7 +154,7 @@
       padding-left: 1px;
     }
 
-    .li_selected {
+    .selected {
       /*  рамка блока */
       border: 1px solid #bbb;
       background-color: rgba(246, 246, 246, 1.0);
@@ -219,7 +219,7 @@
       .ad {display: none;}
       aside {display: none;}
       article {width: 100%;}
-			.panel-for-site {display: none;}
+		header div label:nth-child(n+2) {display: none;}
       /* удаляем flex и делаем ширину инпутов и кода 100% */
 
       /* Увеличиваем высоту ссылок в ОГЛАВЛЕНИИ (размер активных элементов)	*/
@@ -239,12 +239,13 @@
     <!-- НАЧАЛО Контейнера сайта -->
     <header>
       <h1>ЛОГОТИП</h1>
-      <div class="panel-for-site">
+      <div class="selected">
         <label>
-          <input type="checkbox" id="tip" checked="checked">Показывать перевод английских слов</label>
+          <input type="checkbox" id="tip" checked="checked">Перевод слов.</label>
         <br>
         <label>
-          <input type="radio" name='sd-place' id="left" checked="checked">слева </label> &lt;&lt; SIDEBAR &gt;&gt;
+          <input type="radio" name='sd-place' id="left" checked="checked">слева  &lt;&lt; SIDEBAR &gt;&gt;
+        </label>
         <label>
           <input type="radio" name='sd-place' id="right"> справа</label>
       </div>
@@ -318,11 +319,11 @@
       */
       if (hash.search(/#/) == 0) {
         /*Если первый элемент хэша знак # (начинается с 0) , то:
-        - У ВСЕХ li удаляем  класс li_selected.
+        - У ВСЕХ li удаляем  класс selected.
         - Находим родителя ссылки с атрибутом href равным хэшу и его РОДИТЕЛЮ присваиваем класс.
         */
-        $('div.toc ol li').removeClass('li_selected');
-        $('[href="' + hash + '"]').parent().attr("class", "li_selected");
+        $('div.toc ol li').removeClass('selected');
+        $('[href="' + hash + '"]').parent().attr("class", "selected");
       }
       // Обрабатываем клик по свернутому Оглавлению (h4).
       $('div.toc h4').click(function() {
@@ -342,8 +343,8 @@
       });
       // Обрабатываем клик по пунку Оглавления.
       $('div.toc ol li').click(function() {
-        $('div.toc ol li').removeClass('li_selected'); // У ВСЕХ li удаляем класс
-        $(this).addClass('li_selected');
+        $('div.toc ol li').removeClass('selected'); // У ВСЕХ li удаляем класс
+        $(this).addClass('selected');
         $('.toc ol').css("display", "none");
         $('.toc').css({
           "width": "50",
