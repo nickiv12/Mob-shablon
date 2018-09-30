@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="ru">
-<!-- Page Insight 99 / 100
-  В этом файле СДЕЛАНА прозрачная кнопка оглавление страницы которая:
-  - фиксирована относительно правого верхнего края родительского блока;
-  - полупрозрачна, чтобы был виден текст под ней;
-  - При нажатии появляется оглавление страницы;
-  - При выборе пункта оглаления страницы происходит переход на странице к параграфу;
-  TO DO:
-		- Немного увеличить шрифт страницы при просмотре на МАЛЕНЬКОМ экране.
+<!-- SHABLON СТРАНИЦЫ.  Page Insight 99 / 100
+СДЕЛАНО:
+  - Каркас сайта.
+  - Управление САЙДБАРОМ.
+  - Оглавление страницы:
+    a) Выделение заголовка абзаца - с помощью :target
+    b) Управление оглавлением с помощью скрипта.
+    c) Иконка может быть:
+      либо треугольник CSS.
+      либо иконочный шрифт. В этом случае загружаются 2 файла и их подключение нужно делать
+        внизу страницы, ИНАЧЕ очень сильно падает рейтинг PSI (pageSpeed Insights).
+  -
 -->
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -123,7 +127,7 @@
       /* Текст в Оглавлении по центру */
       text-align: center;
       /* Цвет текста в Оглавлении */
-      color: red;
+/*      color: red;*/
       /*поля */
       margin: 2px 2px;
       /* рамка блока */
@@ -136,9 +140,22 @@
       border-radius: 5px;
     }
 		/* Стиль заголовка Оглавлени */
-    div.toc h4 {
-      margin: 1px;
-      padding: 1px;
+    div.toc h4.work {
+      color: blue;
+      box-sizing: content-box;
+      margin: 1px auto;
+      display: flex;
+      cursor: pointer;
+      justify-content:flex-end;
+    }
+
+    /* Стиль треугольника */
+    .tr {
+      margin: 5px;
+      /* Отодвигаю левый соседний блок  */
+      margin-left: 20px;
+      border-top: 10px solid blue;
+      border-left: 10px solid transparent;
     }
 
     /* Стили списка в Оиглвлени */
@@ -157,6 +174,7 @@
     }
 
     .selected {
+/*      color: blue;*/
       /*  рамка блока */
       border: 1px solid #bbb;
       background-color: rgba(246, 246, 246, 1.0);
@@ -180,10 +198,11 @@
     }
 
     .toc_h:target {
-      border: 1px solid #bbb;
+      color: blue;
       /*  рамка блока */
-      background-color: rgba(246, 246, 246, 1);
+      border: 1px solid #bbb;
       /*Цвет ФОНА свернутого меню */
+      background-color: rgba(246, 246, 246, 1);
       /*ВНУТРЕННЯЯ ТЕНЬ для всех  браузеров кроме ИЕ8 и опера-мини */
       box-shadow: inset 0 0 10px #BABABA;
       /* радиус углов */
@@ -225,9 +244,9 @@
       /* удаляем flex и делаем ширину инпутов и кода 100% */
 
       /* Увеличиваем высоту ссылок в ОГЛАВЛЕНИИ (размер активных элементов)	*/
-      .toc ol li  {margin-bottom: 5px;}
+      .toc ol li  {margin-bottom: 3px;}
       .toc ol li a {
-        /*font-size: 16px;*/
+        font-size: 100%;
         /*		padding-bottom: 16px; НЕ ИСПОЛЬЗОВАТЬ - не помогает увеличению активных элементов */
       }
     }
@@ -266,7 +285,10 @@
         <!-- НАЧАЛО СТАТЬИ -->
         <div class="toc">
           <!--  Оглавление страницы - прозрачное -->
-          <h4>Огл.</h4> <!-- Текст заголовка  -->
+          <h4 class="work">
+            <span>.</span> <!-- Текст управляется скриптом -->
+            <span class="tr"></span>
+          </h4>
           <ol>
             <li><a href="#toc_1">Введение.</a></li>
             <li><a href="#toc_2">Пример.</a></li>
@@ -312,6 +334,10 @@
   <script src="JSmain/jquery-3.3.1.min.js"></script>
   <script>
     $(document).ready(function() {
+      // Удаляю текст заголовка ОГЛАВЛЕНИЯ СТРАНИЦЫ.
+      //$('div.toc h4').text(" ");
+      $('div.toc h4.work span:first-child').text(" ");
+
       // ============= НАЧАЛО УПРАВЛЕНИЕ ОГЛАВЛЕНИЕМ СТРАНИЦЫ ==============================
       var hash = window.location.hash;
       /* Получаем hash адресной строки - в конце строки #... (типа #toc_3):
@@ -329,14 +355,19 @@
       }
       // Обрабатываем клик по свернутому Оглавлению (h4).
       $('div.toc h4').click(function() {
-        if ($(this).width() < 50) {
-          $(this).parent().css({
+        var el = $(this);
+//        alert(el.prop("tagName") + " ширина: " + el.width());
+        if (el.width() < 50) {
+          el.parent().css({
             "width": "250",
             "backgroundColor": "rgba(246, 246, 246, 1.0)"
           });
           $('.toc ol').css("display", "block");
-        } else if (($(this).width() > 50)) {
-          $(this).parent().css({
+          $('div.toc h4.work span:first-child').text("Оглавление страницы:");
+        }
+        else if ($(this).width() > 50) {
+          $('div.toc h4.work span:first-child').text("");
+          el.parent().css({
             "width": "50",
             "backgroundColor": "rgba(246, 246, 246, .3)"
           });
@@ -348,6 +379,7 @@
         $('div.toc ol li').removeClass('selected'); // У ВСЕХ li удаляем класс
         $(this).addClass('selected');
         $('.toc ol').css("display", "none");
+        $('div.toc h4.work span:first-child').text(" ");
         $('.toc').css({
           "width": "50",
           "backgroundColor": "rgba(246, 246, 246, .3)"
