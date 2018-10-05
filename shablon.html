@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="ru">
 <!-- SHABLON СТРАНИЦЫ.  Page Insight 99 / 100
-Файл описания D:\w10 КОНСПЕКТЫ_w7\ВЕРСТКА mobile шаблона КОНСПЕКТЫ
+ФАЙЛ ОПИСАНИЯ D:\w10 КОНСПЕКТЫ_w7\ВЕРСТКА mobile шаблона КОНСПЕКТЫ
 
 -->
 <head>
@@ -18,7 +18,7 @@
     */
     /* 0. ====== Базовые стили для ВСЕГО сайта ======== */
     html {
-      /* ширина = content+border+padding. https://ymatuhin.ru/front-end/better_box_sizing/*/
+      /* ширина и высота = content+border+padding. https://ymatuhin.ru/front-end/better_box_sizing/*/
       box-sizing: border-box;
       font-family: Helvetica, Arial, Verdana, sans-serif;
       /* От размера в браузере */
@@ -28,7 +28,6 @@
       /* Цвет приятный для глаз */
       color: #585877;
     }
-
     /* Теперь ВСЕ БУДУТ наследовать  box-sizing от родителя  */
     *,
     *:before,
@@ -36,19 +35,17 @@
       box-sizing: inherit;
     }
 
-    /* 1. === каркас сайта - НАЧАЛО */
+    /* 1. ========== каркас сайта =================================== */
     /* Прижать к верху страницы обязательно для body - 0px */
     body {
       margin: 0px auto;
     }
-
     /* Стили контейнера сайта */
     .cont-site {
       /* Максимальная ширина ВСЕГО сайта */
       max-width: 35cm;
       justify-content: space-between;
     }
-
     /* Стили Логотип */
     header {
       /*Раньше class logo */
@@ -62,49 +59,45 @@
       font-size: 20px;
       margin: 0 auto;
     }
-		.panel-for-site {
-			display: block;
-		}
 
-    /* СЕРЕДИНА САЙТА - sidebar (aside), article, ad - реклама */
+    /* 2. === СЕРЕДИНА САЙТА: sidebar(aside), article, ad - реклама ================ */
+    /*   2.1. ---- ГЛАВНЫЕ КОНТЕЙНЕРЫ СЕРЕДИНЫ САЙТА --------------------------  */
+    /* Контейнер для середины сайта */
     .main {
       margin: 0px auto;
       display: flex;
       border: 1px solid green;
     }
-
+    /* БОКОВАЯ ПАНЕЛЬ навигации */
     aside {
       /*Раньше class sidebar */
       padding: 1%;
       background-color: #a2a2a2;
-      /*!!!!!!!! НЕ ТРОГАТЬ !!!!!!! ширина САЙДБАРА */
+      /*!!! НЕ ТРОГАТЬ !!! ширина САЙДБАРА - написал в 2016, сейчас не помню почему */
       width: 180px;
       min-width: 13%;
       overflow: hidden;
       transition: all 0.3s;
     }
-
+    /* ОСНОВНАЯ СТАТЬЯ сайта */
     article {
-      /*Раньше class article */
       padding: 1%;
-      /* ширина ОСНОВНОЙ ЧАСТИ */
       width: 61%;
     }
-
-     /*Раньше и сейчас class ad - реклама */
+     /* КОЛОНКА ДЛЯ РЕКЛАМЫ */
     .ad {
       padding: 1%;
       background-color: #e2e2e2;
       /* ширина ОСНОВНОЙ ЧАСТИ */
       width: 26%;
     }
-
+    /* ПОДВАЛ */
     footer {
       text-align: center;
       background-color: bisque;
     }
 
-    /* --- Стили раскрыающегося блока свернутого меню toc (table of content) --- */
+    /*  2.2. ----- ОГЛАВЛЕНИЕ СТРАНИЦЫ ----------------------------- */
     div.toc {
       cursor: pointer;
       /*сдвигаем вправо + вынимаем из потока */
@@ -130,7 +123,7 @@
       /* радиус углов */
       border-radius: 5px;
     }
-		/* Стиль заголовка Оглавлени */
+    /* Стиль ЗАГОЛОВКА Оглавления страницы */
     div.toc h4.work {
       color: blue;
       box-sizing: content-box;
@@ -139,8 +132,7 @@
       cursor: pointer;
       justify-content:flex-end;
     }
-
-    /* Стиль треугольника */
+    /* Стиль CSS-треугольника */
     .tr {
       margin: 5px;
       /* Отодвигаю левый соседний блок  */
@@ -148,24 +140,22 @@
       border-top: 10px solid blue;
       border-left: 10px solid transparent;
     }
-
-    /* Стили списка в Оиглвлени */
+    /* Стили СПИСКА в Оиглвлении страницы */
     div.toc ol {
       display: none;
       margin: 1px;
       margin-left: 20px;
       padding: 1px;
     }
-    /* Стили пункта списка в Оиглвлени */
+    /* Стили пункта списка в Оиглвлении страницы */
     div.toc li {
       text-align: left;
       margin: 1px;
       padding: 1px;
       padding-left: 1px;
     }
-
+    /* ВЫДЕЛЕНИЕ выбранного пункта Оглавления страницы */
     .selected {
-/*      color: blue;*/
       /*  рамка блока */
       border: 1px solid #bbb;
       background-color: rgba(246, 246, 246, 1.0);
@@ -175,19 +165,27 @@
       /*радиус углов  */
       border-radius: 5px;
     }
-
-    /* Стили ССЫЛОК в меню */
+    /* Стили ССЫЛОК в Оглавления страницы */
     .toc ol li a {
       /* делаю цвет посещенной ссылки обычным для сайта */
       text-decoration: none;
       color: #585877;
       display: block;
     }
-     /* убираю подчеркивание */
+     /* убираю подчеркивание ПОСЕЩЕННЫХ ССЫЛОК */
     .toc ol li a:visited {
       text-decoration: none;
     }
 
+    /*  2.3. -----  ПАРАГРАФЫ СТАТЬИ ------------------------------ */
+    /* ЗАГОЛОВОК ПАРАГРАФА СТАТЬИ */
+    .toc_h {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 5px;
+      margin-bottom: 3px;
+    }
+    /* выбранный ЗАГОЛОВОК ПАРАГРАФА СТАТЬИ */
     .toc_h:target {
       color: blue;
       /*  рамка блока */
@@ -199,51 +197,37 @@
       /* радиус углов */
       border-radius: 5px;
     }
-
-    /* Стили заголовка параграфа */
-    .toc_h {
-      text-align: center;
-      font-weight: bold;
-      margin-top: 5px;
-      margin-bottom: 3px;
-    }
-
-    /* Стили параграфа */
+    /* ПАРАГРАФ СТАТЬИ */
     .toc_p {
       text-align: justify;
       margin-top: 2px;
       margin-bottom: 2px;
     }
 
-    /* ===== МЕДИА ПРАВИЛА =================	*/
+    /* 3. ===== МЕДИА ПРАВИЛА ДЛЯ РАЗНЫХ РАЗМЕРОВ ЭКРАНОВ =================	*/
+    /*  3.1. ---- ШИРИНА ЭКРАНА < 30cm --- */
     @media only screen and (max-width: 30cm) {
       .ad {display: none;} /* удаляем рекламную колонку */
       aside {width: 20%;}
       article {width: 80%;}
     }
+    /*  3.2. ---- ШИРИНА ЭКРАНА < 25cm --- */
     @media only screen and (max-width: 25cm) {
-      /*.model-inputs div label {font-size: 1.4rem;}  увеличиваем текст в label инпута */
     }
-    /* Для маленьких экранов кнопки ДАЛЬШЕ друг от друга - НАЙДЕНО ОПЫТНЫМ ПУТЕМ в PageSpeedInsights
-    - НЕ ПЕРЕМЕЩАТЬ во внешний файл - сразу снижается с 99% до 91%*/
+    /*  3.3. ---- ШИРИНА ЭКРАНА < 20cm --- */
     @media only screen and (max-width: 20cm) {
       /*  оставляем только 1-у колонку */
       .ad {display: none;}
       aside {display: none;}
       article {width: 100%;}
-		header div label:nth-child(n+2) {display: none;}
-      /* удаляем flex и делаем ширину инпутов и кода 100% */
-
+      /* убираю ПАНЕЛЬ ПЕРЕКЛЮЧЕНИЯ САЙДБАРА */
+      header div label:nth-child(n+2) {display: none;}
       /* Увеличиваем высоту ссылок в ОГЛАВЛЕНИИ (размер активных элементов)	*/
       .toc ol li  {margin-bottom: 3px;}
       .toc ol li a {
         font-size: 100%;
-        /*		padding-bottom: 16px; НЕ ИСПОЛЬЗОВАТЬ - не помогает увеличению активных элементов */
       }
     }
-    @media only screen and (max-width: 20cm) {
-    }
-    /*@media screen and (orientation: landscape) {.article {color: red;}}*/
   </style>
 </head>
 <body>
