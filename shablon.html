@@ -313,25 +313,21 @@
       //$('div.toc h4').text(" ");
       $('div.toc h4.work span:first-child').text(" ");
 
-      // ============= НАЧАЛО УПРАВЛЕНИЕ ОГЛАВЛЕНИЕМ СТРАНИЦЫ ==============================
-      var hash = window.location.hash;
-      /* Получаем hash адресной строки - в конце строки #... (типа #toc_3):
-      - Если нет хэша, то в var hash будет пустая строка - проверял - сделать проверку что есть # в строке.
-      - Если будет что-то, но не хэш (убрал #) - в live Preview сообщение Cannot GET /tocJS.htmltoc_3
-      В реальном браузере  ошибка 404 - файл не найден.
-      */
+      // 1. === УПРАВЛЕНИЕ ОГЛАВЛЕНИЕМ СТРАНИЦЫ ==============================
+      var hash = window.location.hash; /* Получаем hash адресной строки (например, #toc_3) */
+      // Если первым элементом хэша будет знак # , то:
       if (hash.search(/#/) == 0) {
-        /*Если первый элемент хэша знак # (начинается с 0) , то:
-        - У ВСЕХ li удаляем  класс selected.
-        - Находим родителя ссылки с атрибутом href равным хэшу и его РОДИТЕЛЮ присваиваем класс.
-        */
+        // - У ВСЕХ li удаляем  класс selected.
+        // - Находим родителя ссылки с атрибутом href равным хэшу и его РОДИТЕЛЮ присваиваем класс. Если такого нет, то выделения просто не будет
         $('div.toc ol li').removeClass('selected');
         $('[href="' + hash + '"]').parent().attr("class", "selected");
       }
-      // Обрабатываем клик по свернутому Оглавлению (h4).
-      $('div.toc h4').click(function() {
+      /* ВАЖНО: здесь обрабатываются разные клики:
+        - клик по заголовку Оглавления
+        - клик по пункту Оглавления.
+      */
+      $('div.toc h4').click(function() { // Клик по ЗАГОЛОВКУ Оглавления.
         var el = $(this);
-//        alert(el.prop("tagName") + " ширина: " + el.width());
         if (el.width() < 50) {
           el.parent().css({
             "width": "250",
@@ -339,8 +335,7 @@
           });
           $('.toc ol').css("display", "block");
           $('div.toc h4.work span:first-child').text("Оглавление страницы:");
-        }
-        else if ($(this).width() > 50) {
+        } else if ($(this).width() > 50) {
           $('div.toc h4.work span:first-child').text("");
           el.parent().css({
             "width": "50",
@@ -349,7 +344,7 @@
           $('.toc ol').css("display", "none");
         }
       });
-      // Обрабатываем клик по пунку Оглавления.
+      // Обрабатываем клик по ПУНКТУ Оглавления.
       $('div.toc ol li').click(function() {
         $('div.toc ol li').removeClass('selected'); // У ВСЕХ li удаляем класс
         $(this).addClass('selected');
@@ -361,14 +356,13 @@
         });
       }); // ====== КОНЕЦ управление оглавлением страницы =======
 
-      // ==== смена позиции sidebar с помощью JS. ==================================
-      $('[name = sd-place]').click(function(){
+      // 2. ==== смена позиции sidebar с помощью JS. ==================================
+      $('[name = sd-place]').click(function() {
         var a = $(this).attr('id');
-        if(a == 'left') $('.main').css('flex-direction', 'row');
-        else if(a == 'right') $('.main').css('flex-direction', 'row-reverse');
-        //alert(a);
+        if (a == 'left') $('.main').css('flex-direction', 'row');
+        else if (a == 'right') $('.main').css('flex-direction', 'row-reverse');
       });
-    });
+  });
   </script>
 </body>
 </html>
